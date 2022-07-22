@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>都道府県別総人口推移グラフ</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Shippori+Antique&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>都道府県別総人口推移グラフ</h1>
+      <h2>都道府県</h2>
+      <div class="container">
+        <div class="item" v-for="prefecture in prefectures">
+          <label>
+            <input
+              type="checkbox"
+              v-bind:value="{prefName: prefecture.prefName, prefCode: prefecture.prefCode}"
+              v-model="selectPrefectures"
+            />
+            <span>{{ prefecture.prefName }}</span>
+          </label>
+        </div>
+        <!-- {{ prefecture.prefName }} {{ prefecture.prefCode }} -->
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.1.5"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
