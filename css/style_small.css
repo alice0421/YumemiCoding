@@ -1,0 +1,38 @@
+/* 共通事項
+------------------------------ */
+html {
+  font-size: 62.5%; /* 1rem=10px */
+}
+body {
+  font-family: "Noto Serif JP", serif;
+}
+h1 {
+  font-family: "Shippori Antique", sans-serif;
+  text-align: center;
+  background-color: #dcdcdc;
+  border-width: 5px;
+  border-style: inset;
+  padding: 10px;
+}
+main {
+  margin: 0 auto;
+}
+
+/* 都道府県一覧
+------------------------------ */
+#app h2 {
+  margin: 10px;
+}
+#app .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+#app .item {
+  width: 60px;
+  margin-left: 5px;
+  padding: 1px;
+}
+#app .item span {
+  margin-left: 5px;
+}

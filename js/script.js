@@ -66,7 +66,7 @@ app = Vue.createApp({
     drawGraph: function () {
       var parameters = {
         title: {
-          text: "都道府県別の総人口推移グラフ 1960-2045",
+          text: "都道府県別の総人口推移グラフ (1960年-2045年)",
         },
 
         subtitle: {
@@ -109,17 +109,55 @@ app = Vue.createApp({
 
         series: [], // グラフ描写用のデータを格納
 
+        // 600px以下の幅の時のデザイン
         responsive: {
           rules: [
             {
               condition: {
-                maxWidth: 500,
+                maxWidth: 599,
               },
               chartOptions: {
                 legend: {
                   layout: "horizontal",
                   align: "center",
                   verticalAlign: "bottom",
+                  itemStyle: {
+                    fontSize: "8px",
+                  },
+                },
+                title: {
+                  style: {
+                    fontSize: "12px",
+                  },
+                },
+                subtitle: {
+                  style: {
+                    fontSize: "10px",
+                  },
+                },
+                yAxis: {
+                  title: {
+                    style: {
+                      fontSize: "10px",
+                    },
+                  },
+                  labels: {
+                    style: {
+                      fontSize: "8px",
+                    },
+                  },
+                },
+                xAxis: {
+                  title: {
+                    style: {
+                      fontSize: "10px",
+                    },
+                  },
+                  labels: {
+                    style: {
+                      fontSize: "8px",
+                    },
+                  },
                 },
               },
             },
