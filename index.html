@@ -17,24 +17,30 @@
   <body>
     <div id="app">
       <h1>都道府県別総人口推移グラフ</h1>
-      <h2>都道府県</h2>
-      <div class="container">
-        <div class="item" v-for="prefecture in prefectures">
-          <label>
-            <input
-              type="checkbox"
-              v-bind:value="{prefName: prefecture.prefName, prefCode: prefecture.prefCode}"
-              v-model="selectPrefectures"
-            />
-            <span>{{ prefecture.prefName }}</span>
-          </label>
+      <main>
+        <h2>都道府県</h2>
+        <div class="container">
+          <div class="item" v-for="prefecture in prefectures">
+            <label>
+              <input
+                type="checkbox"
+                v-bind:value="{prefName: prefecture.prefName, prefCode: prefecture.prefCode}"
+                v-model="selectPrefectures"
+              />
+              <span>{{ prefecture.prefName }}</span>
+            </label>
+          </div>
         </div>
-        <!-- {{ prefecture.prefName }} {{ prefecture.prefCode }} -->
-      </div>
+
+        <figure class="highcharts-figure">
+          <div id="graph"></div>
+        </figure>
+      </main>
     </div>
 
-    <script src="https://unpkg.com/vue@3.1.5"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3.1.5"></script>
     <script src="js/api.js"></script>
     <script src="js/script.js"></script>
   </body>

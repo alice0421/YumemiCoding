@@ -14,22 +14,27 @@ h1 {
   border-style: inset;
   padding: 10px;
 }
-h2 {
-  margin: 10px;
+main {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* 都道府県一覧
 ------------------------------ */
+#app h2 {
+  margin: 10px;
+}
 #app .container {
+  margin-bottom: 30px;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
 }
 #app .item {
-  width: 110px;
-  margin: 5px;
-  padding: 5px;
-}
-#app .item > span {
+  width: 90px;
   margin-left: 10px;
+  padding: 2px;
+}
+#app .item span {
+  margin-left: 5px;
 }

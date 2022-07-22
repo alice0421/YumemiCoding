@@ -7,6 +7,7 @@ app = Vue.createApp({
   mounted: function () {
     // 読み込み時にのみ1回だけ都道府県取得APIを呼び出す
     this.getPrefectures();
+    this.drawGraph();
   },
   watch: {
     selectPrefectures: function (new_selectPrefectures, old_selectPrefectures) {
@@ -18,7 +19,9 @@ app = Vue.createApp({
         new_selectPrefectures.length === 0
       ) {
         self.selectPopulations.pop();
-        console.log(self.selectPopulations);
+
+        // グラフ描写
+        self.drawGraph();
         return;
       }
 
@@ -29,7 +32,9 @@ app = Vue.createApp({
           (i) => new_selectPrefectures.indexOf(i) === -1
         );
         self.selectPopulations.splice(deletePrefectureIndex, 1);
-        console.log(self.selectPopulations);
+
+        // グラフ描写
+        self.drawGraph();
         return;
       }
 
@@ -50,62 +55,94 @@ app = Vue.createApp({
               new_selectPrefectures[new_selectPrefectures.length - 1].prefName,
             prefPopulation: response.data.result.data[0].data,
           });
-          console.log(self.selectPopulations);
+
+          // グラフ描写
+          self.drawGraph();
         });
     },
   },
   methods: {
+    // グラフ描写のメソッド
+    drawGraph: function () {
+      var parameters = {
+        title: {
+          text: "都道府県別の総人口推移グラフ 1960-2045",
+        },
+
+        subtitle: {
+          text: "Source: RESAS(地域経済分析システム)",
+        },
+
+        yAxis: {
+          title: {
+            text: "総人口数（人）",
+          },
+        },
+
+        xAxis: {
+          categories: [
+            1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995, 2000, 2005, 2010,
+            2015, 2020, 2025, 2030, 2035, 2040, 2045,
+          ],
+          title: {
+            text: "年度（年）",
+          },
+        },
+
+        tooltip: {
+          valueSuffix: "人",
+        },
+
+        legend: {
+          layout: "vertical",
+          align: "right",
+          verticalAlign: "middle",
+        },
+
+        plotOptions: {
+          series: {
+            label: {
+              connectorAllowed: false,
+            },
+          },
+        },
+
+        series: [], // グラフ描写用のデータを格納
+
+        responsive: {
+          rules: [
+            {
+              condition: {
+                maxWidth: 500,
+              },
+              chartOptions: {
+                legend: {
+                  layout: "horizontal",
+                  align: "center",
+                  verticalAlign: "bottom",
+                },
+              },
+            },
+          ],
+        },
+      };
+
+      // 都道府県とその総人口数をグラフ(series)に格納
+      for (let i = 0; i < this.selectPopulations.length; i++) {
+        parameters.series.push({
+          name: this.selectPopulations[i].prefName,
+          data: this.selectPopulations[i].prefPopulation.map(
+            (index) => index.value
+          ),
+        });
+      }
+
+      // Highchartsでグラフ描写
+      Highcharts.chart("graph", parameters);
+    },
+
     getPrefectures: function () {
       const self = this;
-      // self.prefectures = [
-      //   "北海道",
-      //   "青森県",
-      //   "岩手県",
-      //   "宮城県",
-      //   "秋田県",
-      //   "山形県",
-      //   "福島県",
-      //   "茨城県",
-      //   "栃木県",
-      //   "群馬県",
-      //   "埼玉県",
-      //   "千葉県",
-      //   "東京都",
-      //   "神奈川県",
-      //   "新潟県",
-      //   "富山県",
-      //   "石川県",
-      //   "福井県",
-      //   "山梨県",
-      //   "長野県",
-      //   "岐阜県",
-      //   "静岡県",
-      //   "愛知県",
-      //   "三重県",
-      //   "滋賀県",
-      //   "京都府",
-      //   "大阪府",
-      //   "兵庫県",
-      //   "奈良県",
-      //   "和歌山県",
-      //   "鳥取県",
-      //   "島根県",
-      //   "岡山県",
-      //   "広島県",
-      //   "山口県",
-      //   "徳島県",
-      //   "香川県",
-      //   "愛媛県",
-      //   "高知県",
-      //   "福岡県",
-      //   "佐賀県",
-      //   "長崎県",
-      //   "熊本県",
-      //   "大分県",
-      //   "宮崎県",
-      //   "鹿児島県",
-      //   "沖縄県",
-      // ];
       // 都道府県一覧を取得
       axios
         .get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
